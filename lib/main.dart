@@ -30,11 +30,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color primaryTextColor = Color(0xff0D253C);
     final Color secondoryTextColor = Color(0xff2D4379);
+    final Color primaryColor = Colors.blue;
 
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.light(
+          primary: primaryColor,
+          onPrimary: Colors.white,
+          onSurface: primaryTextColor,
+          background: Color(0xffFBFCFF),
+          surface: Colors.white,
+          onBackground: primaryTextColor,
+        ),
         textTheme: TextTheme(
           titleMedium: TextStyle(
             fontFamily: defaultFontFamily,
