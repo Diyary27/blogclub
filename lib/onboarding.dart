@@ -1,3 +1,4 @@
+import 'package:blogclub/auth.dart';
 import 'package:blogclub/data.dart';
 import 'package:blogclub/home.dart';
 import 'package:flutter/cupertino.dart';
@@ -118,7 +119,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                               if (page == items.length - 1) {
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
-                                      builder: (context) => MyHomeScreen()),
+                                      builder: (context) => AuthScreen()),
                                 );
                               } else {
                                 setState(() {
