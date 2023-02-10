@@ -1,3 +1,4 @@
+import 'package:blogclub/article.dart';
 import 'package:blogclub/data.dart';
 import 'package:blogclub/gen/assets.gen.dart';
 import 'package:blogclub/gen/fonts.gen.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color primaryTextColor = Color(0xff0D253C);
     final Color secondoryTextColor = Color(0xff2D4379);
-    final Color primaryColor = Colors.blue;
+    final Color primaryColor = Color(0xff376AED);
 
     return MaterialApp(
       title: 'Flutter Demo',
@@ -85,6 +86,14 @@ class MyApp extends StatelessWidget {
             color: Color(0xff7B8BB2),
           ),
         ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.white,
+          foregroundColor: primaryTextColor,
+          titleSpacing: 32,
+        ),
+        snackBarTheme: SnackBarThemeData(
+          backgroundColor: primaryColor,
+        ),
       ),
       // home: Stack(children: [
       //   Positioned.fill(child: MyHomeScreen()),
@@ -95,7 +104,7 @@ class MyApp extends StatelessWidget {
       //     child: _BottomNavigation(),
       //   ),
       // ]),
-      home: SplashScreen(),
+      home: ArticleScreen(),
     );
   }
 }
