@@ -7,8 +7,8 @@ import 'data.dart';
 import 'gen/assets.gen.dart';
 import 'main.dart';
 
-class MyHomeScreen extends StatelessWidget {
-  const MyHomeScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

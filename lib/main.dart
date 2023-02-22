@@ -110,12 +110,86 @@ class MyApp extends StatelessWidget {
       //     child: _BottomNavigation(),
       //   ),
       // ]),
-      home: ProfileScreen(),
+      home: MainScreen(),
+    );
+  }
+}
+
+class MainScreen extends StatefulWidget {
+  const MainScreen({Key? key}) : super(key: key);
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+const homeIndex = 0;
+const articleIndex = 1;
+const searchIndex = 2;
+const profileIndex = 3;
+const double bottomNavigationHeight = 65;
+
+class _MainScreenState extends State<MainScreen> {
+  int selectedTabIndex = homeIndex;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          Positioned.fill(
+            bottom: bottomNavigationHeight,
+            child: IndexedStack(
+              index: selectedTabIndex,
+              children: [
+                HomeScreen(),
+                ArticleScreen(),
+                SearchScreen(),
+                ProfileScreen(),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            right: 0,
+            left: 0,
+            child: _BottomNavigation(
+              onTap: (int index) {
+                setState(() {
+                  selectedTabIndex = index;
+                });
+              },
+              selectedIndex: selectedTabIndex,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SearchScreen extends StatelessWidget {
+  const SearchScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Text(
+          'Search Box',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+      ),
     );
   }
 }
 
 class _BottomNavigation extends StatelessWidget {
+  final Function(int index) onTap;
+  final int selectedIndex;
+
+  const _BottomNavigation(
+      {super.key, required this.onTap, required this.selectedIndex});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -127,7 +201,7 @@ class _BottomNavigation extends StatelessWidget {
             right: 0,
             bottom: 0,
             child: Container(
-              height: 65,
+              height: bottomNavigationHeight,
               decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -138,25 +212,46 @@ class _BottomNavigation extends StatelessWidget {
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
+                children: [
                   BottomNavigationIcon(
-                      iconFileName: 'Home.png',
-                      activeIconFileName: 'Home.png',
-                      title: 'Home'),
+                    iconFileName: 'Home.png',
+                    activeIconFileName: 'HomeActive.png',
+                    title: 'Home',
+                    onTap: () {
+                      onTap(homeIndex);
+                    },
+                    isActivate: selectedIndex == homeIndex,
+                  ),
                   BottomNavigationIcon(
-                      iconFileName: 'Articles.png',
-                      activeIconFileName: 'Articles.png',
-                      title: 'Articles'),
-                  SizedBox(
-                      width: 5), /////////////////////////////   very important
+                    iconFileName: 'Articles.png',
+                    activeIconFileName: 'ArticlesActive.png',
+                    title: 'Articles',
+                    onTap: () {
+                      onTap(articleIndex);
+                    },
+                    isActivate: selectedIndex == articleIndex,
+                  ),
+                  Expanded(
+                    child: SizedBox(width: 5),
+                  ), /////////////////////////////   very important
                   BottomNavigationIcon(
-                      iconFileName: 'Search.png',
-                      activeIconFileName: 'Search.png',
-                      title: 'Search'),
+                    iconFileName: 'Search.png',
+                    activeIconFileName: 'SearchActive.png',
+                    title: 'Search',
+                    onTap: () {
+                      onTap(searchIndex);
+                    },
+                    isActivate: selectedIndex == searchIndex,
+                  ),
                   BottomNavigationIcon(
-                      iconFileName: 'Menu.png',
-                      activeIconFileName: 'Menu.png',
-                      title: 'Menu'),
+                    iconFileName: 'Menu.png',
+                    activeIconFileName: 'MenuActive.png',
+                    title: 'Menu',
+                    onTap: () {
+                      onTap(profileIndex);
+                    },
+                    isActivate: selectedIndex == profileIndex,
+                  ),
                 ],
               ),
             ),
@@ -189,25 +284,39 @@ class BottomNavigationIcon extends StatelessWidget {
   final String iconFileName;
   final String activeIconFileName;
   final String title;
+  final bool isActivate;
+  final Function() onTap;
 
   const BottomNavigationIcon(
       {super.key,
       required this.iconFileName,
       required this.activeIconFileName,
-      required this.title});
+      required this.title,
+      required this.onTap,
+      required this.isActivate});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset('assets/img/icons/$iconFileName'),
-        SizedBox(height: 4),
-        Text(
-          title,
-          style: Theme.of(context).textTheme.bodySmall,
-        )
-      ],
+    final themeData = Theme.of(context);
+    return Expanded(
+      child: InkWell(
+        onTap: onTap,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+                'assets/img/icons/${isActivate ? activeIconFileName : iconFileName}'),
+            SizedBox(height: 4),
+            Text(
+              title,
+              style: isActivate
+                  ? themeData.textTheme.bodySmall!
+                      .copyWith(color: themeData.colorScheme.primary)
+                  : themeData.textTheme.bodySmall,
+            )
+          ],
+        ),
+      ),
     );
   }
 }
