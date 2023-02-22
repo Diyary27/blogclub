@@ -2,6 +2,7 @@ import 'package:blogclub/article.dart';
 import 'package:blogclub/data.dart';
 import 'package:blogclub/gen/assets.gen.dart';
 import 'package:blogclub/gen/fonts.gen.dart';
+import 'package:blogclub/profile.dart';
 import 'package:blogclub/splash.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
@@ -85,6 +86,11 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.w700,
             color: Color(0xff7B8BB2),
           ),
+          bodyLarge: TextStyle(
+            fontFamily: defaultFontFamily,
+            fontSize: 14,
+            color: primaryTextColor,
+          ),
         ),
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.white,
@@ -104,7 +110,7 @@ class MyApp extends StatelessWidget {
       //     child: _BottomNavigation(),
       //   ),
       // ]),
-      home: ArticleScreen(),
+      home: ProfileScreen(),
     );
   }
 }
